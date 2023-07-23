@@ -6,7 +6,6 @@ import useSWR from "swr";
 
 const PromptInput = () => {
 	const [input, setInput] = useState("");
-
 	const {
 		data: suggestion,
 		isLoading,
@@ -15,6 +14,7 @@ const PromptInput = () => {
 	} = useSWR("/api/suggestion", fetchSuggestionFromChatGPT, {
 		revalidateOnFocus: false,
 	});
+	const loading = isLoading || isValidating;
 
 	return (
 		<div className="m-10">
@@ -22,7 +22,11 @@ const PromptInput = () => {
 				<textarea
 					value={input}
 					onChange={(e) => setInput(e.target.value)}
-					placeholder="Enter a prompt..."
+					placeholder={
+						loading
+							? "ChatGPT is thinking of a suggestion..."
+							: suggestion || "Enter a prompt..."
+					}
 					className="flex-1 p-4 outline-none"
 				/>
 				<button
@@ -45,10 +49,20 @@ const PromptInput = () => {
 				<button
 					type="button"
 					className="p-4 bg-white text-violet-500 border-none transition-colors duration-200 rounded-b-md lg:rounded-r-md lg:rounded-bl-none font-bold"
+					onClick={mutate}
 				>
 					New Suggestion
 				</button>
 			</form>
+
+			{input && (
+				<p className="italic pt-2 pl-2 font-light">
+					Suggestion:{" "}
+					<span className="text-violet-500">
+						{loading ? "ChatGPT is thinking..." : suggestion}
+					</span>
+				</p>
+			)}
 		</div>
 	);
 };
