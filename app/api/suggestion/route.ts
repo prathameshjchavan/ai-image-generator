@@ -2,14 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
 	// Connect to our Microsoft Azure Function Endpoint
-	// const textData = await fetch(
-	// 	process.env.NODE_ENV === "production"
-	// 		? process.env.SUGGESTION_API!
-	// 		: process.env.LOCAL_SUGGESTION_API!,
-	// 	{
-	// 		cache: "no-store",
-	// 	}
-	// );
+	// const res = await fetch("http://localhost:7071/api/getChatGPTSuggestion", {
+	// 	cache: "no-store",
+	// });
+	// const textData = await res.text();
 
 	// This is only used for development environment, to avoid unnecassary use of openai api
 	const textData =
